@@ -44,7 +44,7 @@ router.get("/insights/:id", (ctx) => {
   ctx.response.status = 200;
 });
 
-router.get("/insights/create", (ctx) => {
+router.post("/insights/create", (ctx) => {
   try {
     const params = ctx.params as Insight;
     createInsight({db, id: params.id, brand: params.brand, text:params.text});
@@ -56,7 +56,7 @@ router.get("/insights/create", (ctx) => {
   
 });
 
-router.get("/insights/delete", (ctx) => {
+router.post("/insights/delete", (ctx) => {
   try {
     const params = ctx.params as Insight;
     deleteInsight({db, id: params.id});
