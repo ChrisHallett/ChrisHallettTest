@@ -7,6 +7,7 @@ import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
 import type { Insight } from "$models/insight.ts";
 import createInsight from "./operations/create-insight.ts";
+import deleteInsight from "./operations/delete-insight.ts";
 
 console.log("Loading configuration");
 
@@ -56,7 +57,14 @@ router.get("/insights/create", (ctx) => {
 });
 
 router.get("/insights/delete", (ctx) => {
-  // TODO
+  try {
+    const params = ctx.params as Insight;
+    deleteInsight({db, id: params.id});
+    ctx.response.status = 200;
+  } catch (error) {
+    console.error(error);
+    ctx.response.status = 500;
+  }
 });
 
 const app = new oak.Application();

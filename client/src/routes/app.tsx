@@ -5,7 +5,12 @@ import styles from "./app.module.css";
 import type { Insight } from "../schemas/insight.ts";
 
 export const App = () => {
-  const [insights, setInsights] = useState<Insight>([]);
+  const [insights, setInsights] = useState<Insight[]>([]);
+
+  function deleteInsightCalled({ id }: { id: number }) {
+    const remainingInsights = insights.filter((x) => x.id !== id);
+    setInsights(remainingInsights);
+  }
 
   useEffect(() => {
     fetch(`/api/insights`).then((res) => setInsights(res.json()));
@@ -14,7 +19,11 @@ export const App = () => {
   return (
     <main className={styles.main}>
       <Header />
-      <Insights className={styles.insights} insights={insights} />
+      <Insights
+        className={styles.insights}
+        insights={insights}
+        onDelete={deleteInsightCalled}
+      />
     </main>
   );
 };
